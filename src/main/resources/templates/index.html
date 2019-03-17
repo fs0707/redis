@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+    <style type="text/css">
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle!important;
+        }
+        a{
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+        a:hover{
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-hover table-condensed">
+        <tr>
+            <Th class="col-md-1">编号</Th>
+            <Th class="col-md-1">姓名</Th>
+            <Th  class="col-md-1">性别</Th>
+            <Th  class="col-md-1">班级</Th>
+            <Th  class="col-md-1">出生日期</Th>
+            <Th  class="col-md-1">成绩</Th>
+            <Th  class="col-md-1">考核结果</Th>
+            <Th  class="col-md-2">操作</Th>
+        </tr>
+        <tr align="center" th:each="k,st:${list}">
+            <td th:text="${st.count+(currPage-1)*size}"></td>
+            <td th:text="${k.name}"></td>
+            <td th:text="${k.gender}"></td>
+            <td th:text="${k.clazz}"></td>
+            <td th:text="${k.bir}"></td>
+            <td th:text="${k.score}"></td>
+            <td>
+                <span th:if="${k.score ge 90}" style="color: green;font-weight: bold">优秀</span>
+                <span th:if="${k.score ge 80 && k.score lt 90}" style="color: blue;font-weight: bold">良好</span>
+                <span th:if="${k.score ge 60 && k.score lt 80}" style="color: orange;font-weight: bold">及格</span>
+                <span th:if="${k.score lt 60}" style="color: red;font-weight: bold">不及格</span>
+            </td>
+            <Td>
+                <A href="#" class="btn btn-primary" th:href="@{|/del/${k.id}/${currPage}|}" onclick="return confirm('你确定要删除该数据吗?')">删除</A>
+                <A href="#" class="btn btn-success" th:href="@{|/update/${k.id}|}">修改</A>
+                <A href="#" class="btn btn-danger" th:href="@{/forward/save}">添加</A>
+            </Td>
+        </tr>
+        <tr>
+            <td colspan="8" align="center">
+                <span th:if="${currPage==1}">
+                    首页
+                    上一页
+                </span>
+                <span th:if="${currPage>1}">
+                    <a th:href="@{|/load?currPage=1|}">首页</a>
+                     <a th:href="@{|/load?currPage=${currPage-1}|}">上一页</a>
+                </span>
+                <span th:if="${currPage==maxPage}">
+                    下一页
+                    尾页
+                </span>
+                <span th:if="${currPage<maxPage}">
+                    <a th:href="@{|/load?currPage=${currPage+1}|}">下一页</a>
+                    <a th:href="@{|/load?currPage=${maxPage}|}"> 尾页</a>
+                </span>
+                <span>
+                        共<b style="color: red;">[[${count}]]</b>条
+                        &nbsp;
+                        每页<b style="color: red;">[[${size}]]</b>条
+                        &nbsp;
+                        共<b style="color: red;">[[${maxPage}]]</b>页
+                        &nbsp;
+                        <select name="currPage" onchange="location.href='load?currPage='+this.value">
+                            <div th:each="k:${#numbers.sequence(1,maxPage)}">
+                                <span th:if="${k==currPage}">
+                                    <option th:value="${k}" selected>第[[${k}]]页</option>
+                                </span>
+                                <span th:if="${k!=currPage}">
+                                    <option th:value="${k}">第[[${k}]]页</option>
+                                </span>
+
+                            </div>
+                        </select>
+                    </span>
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <style type="text/css">
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+
+        a {
+            text-decoration: none;
+            color: blue;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script th:inline="javascript">
+        function abc() {
+            var s = [[${id}]];
+            alert(s);
+        }
+    </script>
+</head>
+<body>
+<div class="container col-md-10 col-md-offset-2">
+    <Br>
+    <Br>
+    <form class="form-horizontal" role="form" th:action="@{/save}" th:method="post">
+        <div class="form-group">
+            <label for="name" class="col-md-2 control-label">姓名</label>
+            <div class="col-md-4">
+                <input type="hidden" name="id" th:value="${m?.id}">
+            <input type="text" class="form-control" required="required"  id="name" name="name" th:value="${m?.name}"
+                   placeholder="请输入名字">
+        </div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-4">
+                <div th:if="${m?.gender==null}">
+                    <label class="radio-inline">
+                        <input type="radio"  value="男" name="gender" checked="checked" id="gender">男性
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio"  value="女" name="gender">女性
+                    </label>
+                </div>
+                <div th:if="${m?.gender!=null}">
+                    <div th:if="${m?.gender eq '男'}">
+                        <label class="radio-inline">
+                            <input type="radio"  value="男" name="gender" checked="checked" id="gender">男性
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio"  value="女" name="gender">女性
+                        </label>
+                    </div>
+                    <div th:if="${m?.gender ne '男'}">
+                        <label class="radio-inline">
+                            <input type="radio"  value="男" name="gender">男性
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio"  value="女" name="gender"  checked="checked">女性
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="clazz" class="col-sm-2 control-label">班级</label>
+            <div class="col-sm-4">
+                <input type="text" required="required" class="form-control" id="clazz" name="clazz" th:value="${m?.clazz}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="score" class="col-sm-2 control-label">成绩</label>
+            <div class="col-sm-4">
+                <input type="number" required="required" class="form-control" id="score" name="score" th:value="${m?.score}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="bir" class="col-sm-2 control-label">生日</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="bir" name="bir" th:value="${m?.bir}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-success">提交</button>
+                <button type="button" onclick="history.back()" class="btn btn-info">返回</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div>
+        <input type="checkbox" name="language" value="java" th:checked="${#arrays.contains(arrs,'java')}">java
+        <input type="checkbox" name="language" value="java" th:checked="${#arrays.contains(arrs,'vp')}">vp
+        <input type="checkbox" name="language" value="java" th:checked="${#arrays.contains(arrs,'struts2')}">struts2
+        <input type="checkbox" name="language" value="java" th:checked="${#arrays.contains(arrs,'spring')}">spring
+        <input type="checkbox" name="language" value="java" th:checked="${#arrays.contains(arrs,'net')}">net
+        <input type="checkbox" name="language" value="java" th:checked="${#arrays.contains(arrs,'hibernate')}">hibernate
+
+    </div>
+
+</div>
+</body>
+</html>
